@@ -1,5 +1,7 @@
 package com.example.demo.service.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +16,23 @@ public class ServiceType extends BaseEntity  {
   private Float price;
 
   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "services")
+  @JsonBackReference
   private List<Appointment> appointments = new ArrayList<>();
 
   public ServiceType() {
+  }
+
+  public ServiceType(String _id, String name, Float price) {
+    this.set_id(_id);
+    this.name = name;
+    this.price = price;
+  }
+
+  public ServiceType(String _id, String name, Float price, List<Appointment> appointments) {
+    this.set_id(_id);
+    this.name = name;
+    this.price = price;
+    this.appointments = appointments;
   }
 
   public ServiceType(String name, Float price) {

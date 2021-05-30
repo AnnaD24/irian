@@ -31,7 +31,6 @@ public class Appointment extends BaseEntity{
   )
   private List<ServiceType> services;
 
-  //vezi cum adaugi programari cu tot cu servicii
   public Appointment(String petName, String diagnostic, AppointmentStatus status, String doctorName, Date dateTime) {
     this.petName = petName;
     this.diagnostic = diagnostic;
@@ -41,6 +40,15 @@ public class Appointment extends BaseEntity{
   }
 
   public Appointment() {
+  }
+
+  public Appointment(String petName, String diagnostic, AppointmentStatus status, String doctorName, Date dateTime, List<ServiceType> services) {
+    this.petName = petName;
+    this.diagnostic = diagnostic;
+    this.status = status;
+    this.doctorName = doctorName;
+    this.dateTime = dateTime;
+    this.services = services;
   }
 
   public String getPetName() {

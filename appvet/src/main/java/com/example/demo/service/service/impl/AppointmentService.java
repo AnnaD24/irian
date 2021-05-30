@@ -41,22 +41,59 @@ public class AppointmentService implements IAppointmentService {
         appointmentDto.dateTime
     );
     //TODO: check service exists
-    for(ServiceType serviceType: appointmentDto.services) {
-      Optional<ServiceType> foundService = serviceTypeRepository.findByName(serviceType.getName());
+    for(ServiceTypeDto serviceType: appointmentDto.services) {
+      Optional<ServiceType> foundService = serviceTypeRepository.findById(serviceType.id);
       appointment.addService(foundService.get());
     }
 
     return Optional.of(mapToModel(appointmentRepository.save(appointment)));
  }
 
+  @Override
+  public Page<Appointment> getAppointmentsForDoctor(String doctorName, Pageable pageable) {
+    return appointmentRepository.findByDoctorName(doctorName, pageable);
+  }
+
+  @Override
+  public Optional<Appointment> getAppointment(String id) {
+    return appointmentRepository.findById(id);
+  }
+
+  @Override
+  public Optional<AppointmentDto> modifyAppointment(AppointmentDto appointmentDto) {
+    Optional<Appointment> newAppointment = appointmentRepository.findById(appointmentDto.id);
+
+    if(newAppointment.isEmpty())
+      return Optional.empty();
+
+    Appointment foundAppointment = newAppointment.get();
+
+    List<ServiceType> serviceTypeList = appointmentDto.services.stream()
+        .map(serviceTypeDto -> new ServiceType(serviceTypeDto.id, serviceTypeDto.name, serviceTypeDto.price))
+        .collect(Collectors.toList());
+
+    foundAppointment.setDateTime(appointmentDto.dateTime);
+    foundAppointment.setDiagnostic(appointmentDto.diagnostic);
+    foundAppointment.setDoctorName(appointmentDto.doctorName);
+    foundAppointment.setServices(serviceTypeList);
+    foundAppointment.setStatus(appointmentDto.status);
+    foundAppointment.setPetName(appointmentDto.petName);
+
+    return Optional.of(mapToModel(appointmentRepository.save(foundAppointment)));
+  }
+
   //TODO: change to MappingService
   public AppointmentDto mapToModel(Appointment appointment) {
+    List<ServiceTypeDto> serviceDtos = appointment.getServices().stream()
+        .map(serviceType -> serviceTypeService.mapToModel(serviceType))
+        .collect(Collectors.toList());
+
     return new AppointmentDto(appointment.get_id(),
         appointment.getDoctorName(),
         appointment.getPetName(),
         appointment.getDiagnostic(),
         appointment.getDateTime(),
         appointment.getStatus(),
-        appointment.getServices());
+        serviceDtos);
   }
 }

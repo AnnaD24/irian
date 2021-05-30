@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 @EnableSwagger2
 @RestController
 @RequestMapping("/rest/appointments")
@@ -23,6 +24,11 @@ public class AppointmentController {
     return appointmentService.getAppointments(pageable);
   }
 
+  @GetMapping("/{doctorName}")
+  public Page<Appointment> getAppointmentsForDoctor(@PathVariable("doctorName") String doctorName, Pageable pageable) {
+    return appointmentService.getAppointmentsForDoctor(doctorName, pageable);
+  }
+
   @PostMapping
   @ResponseBody
   public ResponseEntity<String> addAppointment(@RequestBody AppointmentDto appointmentDto) {
@@ -31,5 +37,13 @@ public class AppointmentController {
     return appointmentService.add(appointmentDto)
         .map(value -> new ResponseEntity<>(value + " added", HttpStatus.CREATED))
         .orElseGet(() -> new ResponseEntity<>("Error when adding new appointment", HttpStatus.BAD_REQUEST));
+  }
+
+  @PutMapping
+  @ResponseBody
+  public ResponseEntity<String> modifyAppointment(@RequestBody AppointmentDto appointmentDto) {
+        return appointmentService.modifyAppointment(appointmentDto)
+        .map(value -> new ResponseEntity<>(value + " modified.", HttpStatus.CREATED))
+        .orElseGet(() -> new ResponseEntity<>("Error when modifying appointment", HttpStatus.BAD_REQUEST));
   }
 }
