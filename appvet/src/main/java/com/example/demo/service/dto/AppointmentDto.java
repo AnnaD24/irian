@@ -23,4 +23,52 @@ public class AppointmentDto {
     this.status = status;
     this.services = services;
   }
+
+  public String getDoctorName() {
+    return doctorName;
+  }
+
+  public void setDoctorName(String doctorName) {
+    this.doctorName = doctorName;
+  }
+
+  public String getPetName() {
+    return petName;
+  }
+
+  public void setPetName(String petName) {
+    this.petName = petName;
+  }
+
+  public String getDiagnostic() {
+    return diagnostic;
+  }
+
+  public void setDiagnostic(String diagnostic) {
+    this.diagnostic = diagnostic;
+  }
+
+  public Date getDateTime() {
+    return dateTime;
+  }
+
+  public void setDateTime(Date dateTime) {
+    this.dateTime = dateTime;
+  }
+
+  public AppointmentStatus getStatus() {
+    return status;
+  }
+
+  public void setStatus(AppointmentStatus status) {
+    this.status = status;
+  }
+
+  public List<ServiceTypeDto> getServices() {
+    return services;
+  }
+
+  public void setServices(List<ServiceTypeDto> services) {
+    this.services = services;
+  }
 }

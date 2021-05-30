@@ -10,4 +10,6 @@ public interface IServiceTypeService {
   Collection<ServiceTypeDto> getServices();
 
   Optional<ServiceTypeDto> add(ServiceTypeDto serviceTypeDto);
+
+  boolean existsByName(String name);
 }

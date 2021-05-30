@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -80,6 +81,11 @@ public class AppointmentService implements IAppointmentService {
     foundAppointment.setPetName(appointmentDto.petName);
 
     return Optional.of(mapToModel(appointmentRepository.save(foundAppointment)));
+  }
+
+  @Override
+  public boolean existsAppointmentByPetNameAndDate(String petName, Date dateTime) {
+    return appointmentRepository.existsAppointmentByPetNameAndDateTime(petName, dateTime);
   }
 
   //TODO: change to MappingService

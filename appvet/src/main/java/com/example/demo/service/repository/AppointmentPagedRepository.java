@@ -10,5 +10,5 @@ import java.util.Optional;
 
 public interface AppointmentPagedRepository extends PagingAndSortingRepository<Appointment, String> {
   Page<Appointment> findByDoctorName(String doctorName, Pageable pageable);
-  Optional<Appointment> findByPetNameAndDateTime(String petName, Date dateTime);
+  boolean existsAppointmentByPetNameAndDateTime(String petName, Date dateTime);
 }

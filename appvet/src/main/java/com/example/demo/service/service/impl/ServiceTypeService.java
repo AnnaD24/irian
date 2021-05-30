@@ -33,6 +33,11 @@ public class ServiceTypeService implements IServiceTypeService {
     return Optional.of(mapToModel(serviceTypeRepository.save(serviceType)));
   }
 
+  @Override
+  public boolean existsByName(String name) {
+    return serviceTypeRepository.existsByName(name);
+  }
+
   //TODO: change to MappingService
   public ServiceTypeDto mapToModel(ServiceType serviceType) {
     return new ServiceTypeDto(serviceType.get_id(), serviceType.getName(), serviceType.getPrice());
