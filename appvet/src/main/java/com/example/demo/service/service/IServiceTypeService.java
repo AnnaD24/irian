@@ -1,12 +1,13 @@
 package com.example.demo.service.service;
 
 import com.example.demo.service.domain.ServiceType;
+import com.example.demo.service.dto.ServiceTypeDto;
 
 import java.util.Collection;
 import java.util.Optional;
 
 public interface IServiceTypeService {
-  Collection<ServiceType> getServices();
+  Collection<ServiceTypeDto> getServices();
 
-  Optional<ServiceType> add(ServiceType serviceType);
+  Optional<ServiceTypeDto> add(ServiceTypeDto serviceTypeDto);
 }

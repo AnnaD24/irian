@@ -11,7 +11,6 @@ public class Appointment extends BaseEntity{
   @Column(nullable = false)
   private String petName;
 
-  @Column(nullable = false)
   private String diagnostic;
 
   @Enumerated(EnumType.STRING)
@@ -24,17 +23,21 @@ public class Appointment extends BaseEntity{
   @Temporal(TemporalType.TIMESTAMP)
   private Date dateTime;
 
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "appointments")
+  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JoinTable(
+      name = "appointment_service",
+      joinColumns = @JoinColumn(name = "appointment_id"),
+      inverseJoinColumns = @JoinColumn(name = "service_id")
+  )
   private List<ServiceType> services;
 
-  public Appointment(String _id, String petName, String diagnostic, AppointmentStatus status, String doctorName, Date dateTime, List<ServiceType> services) {
-    this.set_id(_id);
+  //vezi cum adaugi programari cu tot cu servicii
+  public Appointment(String petName, String diagnostic, AppointmentStatus status, String doctorName, Date dateTime) {
     this.petName = petName;
     this.diagnostic = diagnostic;
     this.status = status;
     this.doctorName = doctorName;
     this.dateTime = dateTime;
-    this.services = services;
   }
 
   public Appointment() {
@@ -93,7 +96,6 @@ public class Appointment extends BaseEntity{
       services = new ArrayList<>();
     }
     services.add(service);
+    service.getAppointments().add(this);
   }
-
-
 }

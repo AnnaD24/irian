@@ -1,6 +1,7 @@
 package com.example.demo.service.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,21 +13,14 @@ public class ServiceType extends BaseEntity  {
   @Column(nullable = false)
   private Float price;
 
-  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-  @JoinTable(
-      name = "appointment_service",
-      joinColumns = @JoinColumn(name = "service_id"),
-      inverseJoinColumns = @JoinColumn(name = "appointment_id")
-  )
-  private List<Appointment> appointments;
+  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "services")
+  private List<Appointment> appointments = new ArrayList<>();
 
   public ServiceType() {
   }
 
-  public ServiceType(String _id, String name, List<Appointment> appointments, Float price) {
-    this.set_id(_id);
+  public ServiceType(String name, Float price) {
     this.name = name;
-    this.appointments = appointments;
     this.price = price;
   }
 

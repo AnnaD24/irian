@@ -1,6 +1,7 @@
 package com.example.demo.web.rest;
 
 import com.example.demo.service.domain.Appointment;
+import com.example.demo.service.dto.AppointmentDto;
 import com.example.demo.service.service.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,10 +25,11 @@ public class AppointmentController {
 
   @PostMapping
   @ResponseBody
-  public ResponseEntity<String> addAppointment(@RequestBody Appointment appointment) {
-    return appointmentService.add(appointment)
+  public ResponseEntity<String> addAppointment(@RequestBody AppointmentDto appointmentDto) {
+    //TODO add validation
+    //TODO check duplicates by petName & date
+    return appointmentService.add(appointmentDto)
         .map(value -> new ResponseEntity<>(value + " added", HttpStatus.CREATED))
         .orElseGet(() -> new ResponseEntity<>("Error when adding new appointment", HttpStatus.BAD_REQUEST));
   }
-
 }
