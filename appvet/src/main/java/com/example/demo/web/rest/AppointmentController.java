@@ -18,6 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @RestController
 @RequestMapping("/rest/appointments")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AppointmentController {
   @Autowired
   IAppointmentService appointmentService;
