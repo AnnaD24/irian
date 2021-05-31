@@ -7,13 +7,17 @@ import {IPage} from "./page.model";
 
 @Injectable()
 export class AppointmentRestService implements IAppointmentsService {
-  private url: string = `http://localhost:8080/rest/appointments/paged?pageNumber=1&pageSize=5&sort.sorted=true`;
+  private url: string = `http://localhost:8080/rest/appointments`;
 
   constructor(private http: HttpClient) {
   }
 
   getPagedAppointments(): Observable<IPage> {
-    return this.http.get<IPage>(this.url);
+    return this.http.get<IPage>(this.url + '?pageSize=5&pageNo=0&sortBy=dateTime');
+  }
+
+  getPagedAppointmentsByDoctorName(name: string): Observable<IPage> {
+    return this.http.get<IPage>(this.url + '/' + name);
   }
 }
 

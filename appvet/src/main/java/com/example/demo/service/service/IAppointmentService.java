@@ -16,7 +16,7 @@ public interface IAppointmentService {
 
   Optional<AppointmentDto> add(AppointmentDto appointmentDto);
 
-  Page<AppointmentDto> getAppointmentsForDoctor(String doctorName, Pageable pageable);
+  Page<AppointmentDto> getAppointmentsForDoctor(String doctorName, Integer pageNo, Integer pageSize, String sortBy, String direction);
 
   Optional<Appointment> getAppointment(String id);
 

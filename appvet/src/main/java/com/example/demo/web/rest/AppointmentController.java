@@ -37,8 +37,14 @@ public class AppointmentController {
   }
 
   @GetMapping("/{doctorName}")
-  public Page<AppointmentDto> getAppointmentsForDoctor(@PathVariable("doctorName") String doctorName, Pageable pageable) {
-    return appointmentService.getAppointmentsForDoctor(doctorName, pageable);
+  public Page<AppointmentDto> getAppointmentsForDoctor(
+      @RequestParam(defaultValue = "0") Integer pageNo,
+      @RequestParam(defaultValue = "5") Integer pageSize,
+      @RequestParam(defaultValue = "dateTime") String sortBy,
+      @RequestParam(defaultValue = "DESC") String direction,
+      @PathVariable("doctorName") String doctorName
+  ) {
+    return appointmentService.getAppointmentsForDoctor(doctorName, pageNo, pageSize, sortBy, direction);
   }
 
   @PostMapping

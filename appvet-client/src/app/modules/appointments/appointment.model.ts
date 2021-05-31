@@ -8,5 +8,6 @@ export interface IAppointment {
   diagnostic: string,
   status: Status,
   dateTime: Date,
-  services: Array<IServiceModel>
+  services: Array<IServiceModel>,
+  totalCost: number
 }

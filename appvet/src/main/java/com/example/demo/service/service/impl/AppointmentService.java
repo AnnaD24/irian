@@ -33,7 +33,7 @@ public class AppointmentService implements IAppointmentService {
   public Page<AppointmentDto> getAppointments(Integer pageNo, Integer pageSize, String sortBy, String direction) {
     Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction) ,sortBy));
     Page<Appointment> appointmentsPage = appointmentRepository.findAll(pageable);
-    return appointmentsPage.map(appointment -> mapToModel(appointment));
+    return appointmentsPage.map(this::mapToModel);
   }
 
  @Override
@@ -56,9 +56,10 @@ public class AppointmentService implements IAppointmentService {
  }
 
   @Override
-  public Page<AppointmentDto> getAppointmentsForDoctor(String doctorName, Pageable pageable) {
+  public Page<AppointmentDto> getAppointmentsForDoctor(String doctorName, Integer pageNo, Integer pageSize, String sortBy, String direction) {
+    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction) ,sortBy));
     Page<Appointment> appointmentsPage = appointmentRepository.findByDoctorName(doctorName, pageable);
-    return appointmentsPage.map(appointment -> mapToModel(appointment));
+    return appointmentsPage.map(this::mapToModel);
   }
 
   @Override
