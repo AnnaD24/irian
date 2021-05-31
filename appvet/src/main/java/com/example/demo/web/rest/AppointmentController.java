@@ -30,9 +30,10 @@ public class AppointmentController {
   public Page<AppointmentDto> getAppointments(
       @RequestParam(defaultValue = "0") Integer pageNo,
       @RequestParam(defaultValue = "5") Integer pageSize,
-      @RequestParam(defaultValue = "dateTime") String sortBy
+      @RequestParam(defaultValue = "dateTime") String sortBy,
+      @RequestParam(defaultValue = "DESC") String direction
       ) {
-    return appointmentService.getAppointments(pageNo, pageSize, sortBy);
+    return appointmentService.getAppointments(pageNo, pageSize, sortBy, direction);
   }
 
   @GetMapping("/{doctorName}")

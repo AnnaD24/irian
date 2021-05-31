@@ -28,9 +28,10 @@ public class AppointmentService implements IAppointmentService {
  private AppointmentPagedRepository appointmentRepository;
   @Autowired
   private ServiceTypeRepository serviceTypeRepository;
+
   @Override
-  public Page<AppointmentDto> getAppointments(Integer pageNo, Integer pageSize, String sortBy) {
-    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+  public Page<AppointmentDto> getAppointments(Integer pageNo, Integer pageSize, String sortBy, String direction) {
+    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction) ,sortBy));
     Page<Appointment> appointmentsPage = appointmentRepository.findAll(pageable);
     return appointmentsPage.map(appointment -> mapToModel(appointment));
   }
