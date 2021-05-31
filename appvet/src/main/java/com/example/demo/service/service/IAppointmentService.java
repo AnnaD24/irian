@@ -12,11 +12,11 @@ import java.util.Optional;
 
 
 public interface IAppointmentService {
-  Page<Appointment> getAppointments(Pageable pageable);
+  Page<AppointmentDto> getAppointments(Integer pageNo, Integer pageSize, String sortBy);
 
   Optional<AppointmentDto> add(AppointmentDto appointmentDto);
 
-  Page<Appointment> getAppointmentsForDoctor(String doctorName, Pageable pageable);
+  Page<AppointmentDto> getAppointmentsForDoctor(String doctorName, Pageable pageable);
 
   Optional<Appointment> getAppointment(String id);
 

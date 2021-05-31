@@ -10,7 +10,9 @@ import com.example.demo.service.repository.ServiceTypeRepository;
 import com.example.demo.service.service.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -27,8 +29,10 @@ public class AppointmentService implements IAppointmentService {
   @Autowired
   private ServiceTypeRepository serviceTypeRepository;
   @Override
-  public Page<Appointment> getAppointments(Pageable pageable) {
-    return appointmentRepository.findAll(pageable);
+  public Page<AppointmentDto> getAppointments(Integer pageNo, Integer pageSize, String sortBy) {
+    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+    Page<Appointment> appointmentsPage = appointmentRepository.findAll(pageable);
+    return appointmentsPage.map(appointment -> mapToModel(appointment));
   }
 
  @Override
@@ -51,8 +55,9 @@ public class AppointmentService implements IAppointmentService {
  }
 
   @Override
-  public Page<Appointment> getAppointmentsForDoctor(String doctorName, Pageable pageable) {
-    return appointmentRepository.findByDoctorName(doctorName, pageable);
+  public Page<AppointmentDto> getAppointmentsForDoctor(String doctorName, Pageable pageable) {
+    Page<Appointment> appointmentsPage = appointmentRepository.findByDoctorName(doctorName, pageable);
+    return appointmentsPage.map(appointment -> mapToModel(appointment));
   }
 
   @Override
@@ -100,6 +105,14 @@ public class AppointmentService implements IAppointmentService {
         appointment.getDiagnostic(),
         appointment.getDateTime(),
         appointment.getStatus(),
-        serviceDtos);
+        serviceDtos,
+        this.computeServicesTotalCost(serviceDtos));
+  }
+
+
+  private Float computeServicesTotalCost(List<ServiceTypeDto> services) {
+    return services.stream()
+        .map(serviceTypeDto -> serviceTypeDto.price)
+        .reduce((float) 0, Float::sum);
   }
 }

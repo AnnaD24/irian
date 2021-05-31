@@ -26,13 +26,17 @@ public class AppointmentController {
   @Autowired
   AppointmentValidator appointmentValidator;
 
-  @GetMapping("/paged")
-  public Page<Appointment> getAppointments(Pageable pageable) {
-    return appointmentService.getAppointments(pageable);
+  @GetMapping
+  public Page<AppointmentDto> getAppointments(
+      @RequestParam(defaultValue = "0") Integer pageNo,
+      @RequestParam(defaultValue = "5") Integer pageSize,
+      @RequestParam(defaultValue = "dateTime") String sortBy
+      ) {
+    return appointmentService.getAppointments(pageNo, pageSize, sortBy);
   }
 
   @GetMapping("/{doctorName}")
-  public Page<Appointment> getAppointmentsForDoctor(@PathVariable("doctorName") String doctorName, Pageable pageable) {
+  public Page<AppointmentDto> getAppointmentsForDoctor(@PathVariable("doctorName") String doctorName, Pageable pageable) {
     return appointmentService.getAppointmentsForDoctor(doctorName, pageable);
   }
 

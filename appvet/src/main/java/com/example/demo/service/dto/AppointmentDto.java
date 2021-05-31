@@ -13,8 +13,9 @@ public class AppointmentDto {
   public Date dateTime;
   public AppointmentStatus status;
   public List<ServiceTypeDto> services;
+  public Float totalCost;
 
-  public AppointmentDto(String id, String doctorName, String petName, String diagnostic, Date dateTime, AppointmentStatus status, List<ServiceTypeDto> services) {
+  public AppointmentDto(String id, String doctorName, String petName, String diagnostic, Date dateTime, AppointmentStatus status, List<ServiceTypeDto> services, Float totalCost) {
     this.id = id;
     this.doctorName = doctorName;
     this.petName = petName;
@@ -22,6 +23,7 @@ public class AppointmentDto {
     this.dateTime = dateTime;
     this.status = status;
     this.services = services;
+    this.totalCost = totalCost;
   }
 
   public String getDoctorName() {
@@ -70,5 +72,13 @@ public class AppointmentDto {
 
   public void setServices(List<ServiceTypeDto> services) {
     this.services = services;
+  }
+
+  public Float getTotalCost() {
+    return totalCost;
+  }
+
+  public void setTotalCost(Float totalCost) {
+    this.totalCost = totalCost;
   }
 }
