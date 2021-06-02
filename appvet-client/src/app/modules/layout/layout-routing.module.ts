@@ -8,7 +8,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'services', loadChildren: () => import('../services/services.module').then(m => m.ServicesModule)
+        path: 'services', loadChildren: () => import('../medicalServices/medicalService.module').then(m => m.MedicalServiceModule)
       },
       {
         path: 'appointments', loadChildren: () => import('../appointments/appointments.module').then(m => m.AppointmentsModule)

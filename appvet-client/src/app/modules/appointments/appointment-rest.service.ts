@@ -2,8 +2,8 @@ import {APPOINTMENT_SERVICE, IAppointmentsService} from "./appointments.service"
 import {Injectable, Provider} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {IAppointment} from "./appointment.model";
 import {IPage} from "./page.model";
+import {IAppointment} from "./appointment.model";
 
 @Injectable()
 export class AppointmentRestService implements IAppointmentsService {
@@ -18,6 +18,20 @@ export class AppointmentRestService implements IAppointmentsService {
 
   getPagedAppointmentsByDoctorName(name: string): Observable<IPage> {
     return this.http.get<IPage>(this.url + '/' + name);
+  }
+
+  modifyAppointment(newAppointment: IAppointment): Observable<any> {
+    return this.http.put(
+      this.url,
+      newAppointment
+    );
+  }
+
+  saveAppointment(newAppointment: IAppointment): Observable<any> {
+    return this.http.post(
+      this.url,
+      newAppointment
+    );
   }
 }
 

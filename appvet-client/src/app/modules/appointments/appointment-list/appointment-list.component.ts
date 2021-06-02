@@ -2,20 +2,23 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {IAppointment} from "../appointment.model";
 import {APPOINTMENT_SERVICE, IAppointmentsService} from "../appointments.service";
 import {MatSelectChange} from "@angular/material/select";
-import {$e} from "codelyzer/angular/styles/chars";
+import {MatDialog} from "@angular/material/dialog";
+import {AddAppointmentDialogComponent} from "../add-appointment-dialog/add-appointment-dialog.component";
+import {EditAppointmentDialogComponent} from "../edit-appointment-dialog/edit-appointment-dialog.component";
 
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointment-list.component.html',
   styleUrls: ['./appointment-list.component.css']
 })
-export class AppointmentListComponent implements OnInit {
+export class AppointmentListComponent {
 
   public appointments: Array<IAppointment>;
   public doctors: Set<string>;
   selected: string = 'all';
 
-  constructor(@Inject(APPOINTMENT_SERVICE) private appointmentService: IAppointmentsService) {
+  constructor(@Inject(APPOINTMENT_SERVICE) private appointmentService: IAppointmentsService,
+              public dialog: MatDialog) {
     this.getAllAppointments();
   }
 
@@ -37,6 +40,16 @@ export class AppointmentListComponent implements OnInit {
       })
   }
 
-  ngOnInit(): void {
+  openEditDialog(appointment: IAppointment): void {
+    this.dialog.open(EditAppointmentDialogComponent, {
+      width: '500px',
+      data: {appointment: appointment},
+    });
+  }
+
+  openAddDialog(): void {
+    this.dialog.open(AddAppointmentDialogComponent, {
+      width: '500px',
+    });
   }
 }

@@ -1,0 +1,41 @@
+<div class="container">
+  <form (ngSubmit)="onSubmit()" [formGroup]="appointmentForm" class="new-order">
+    <div style="display: flex; flex-direction: column;">
+      <mat-form-field appearance="fill">
+        <mat-label>Pet name</mat-label>
+        <input class="form-control" formControlName="petName" matInput
+               name="petName"
+               type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Doctor name</mat-label>
+        <input class="form-control" formControlName="doctorName" matInput
+               name="doctorName"
+               type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Services</mat-label>
+        <mat-select class="form-control" formControlName="services" matInput
+                    multiple
+                    name="services"
+        >
+          <mat-option *ngFor="let service of services"
+                      [value]="service"
+          >
+            {{service.name}} ({{service.price}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <input [ngxMatDatetimePicker]="picker" formControlName="datetime" matInput name="datetime"
+               placeholder="Choose a date">
+        <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker>
+        </ngx-mat-datetime-picker>
+      </mat-form-field>
+    </div>
+    <div class="right-align">
+      <button [disabled]="!appointmentForm.valid" class="btn" color="primary" mat-button type="submit">Save</button>
+    </div>
+  </form>
+</div>

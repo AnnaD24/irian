@@ -1,6 +1,5 @@
 package com.example.demo.web.rest;
 
-import com.example.demo.service.domain.ServiceType;
 import com.example.demo.service.dto.ServiceTypeDto;
 import com.example.demo.service.service.MedicalServiceValidator;
 import com.example.demo.service.service.impl.ServiceTypeService;
@@ -11,12 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.net.URI;
 import java.util.Collection;
 
 @EnableSwagger2
 @RestController
 @RequestMapping("/rest/services")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class MedicalServiceController {
   @Autowired
   private ServiceTypeService serviceTypeService;

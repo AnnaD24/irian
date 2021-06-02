@@ -2,3 +2,17 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.error {
+  font-size: .8rem;
+  color: #ee6e73 !important;
+  position: relative;
+  top: -20px;
+
+}
+
+.error > label {
+  color: #ee6e73 !important;
+  position: absolute;
+  top: 2px;
+}
