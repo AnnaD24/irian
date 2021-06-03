@@ -1,0 +1,31 @@
+
+<div class="container">
+  <h3>Add service</h3>
+  <form (ngSubmit)="onSubmit()" [formGroup]="serviceForm" >
+    <div style="display: flex; flex-direction: column;">
+      <mat-form-field appearance="fill">
+        <mat-label>Service name</mat-label>
+        <input class="form-control" formControlName="name" matInput
+               name="name"
+               type="text">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Price</mat-label>
+        <input class="form-control" formControlName="price" matInput
+               name="price"
+               type="number"
+               min="1"
+               required
+        >
+      </mat-form-field>
+    </div>
+    <div *ngIf="price.invalid && (price.dirty || price.touched)">
+      <div *ngIf="!price.errors?.required" class="error">
+        Minimum price is 50 RON.
+      </div>
+    </div>
+    <div>
+      <button [disabled]="!serviceForm.valid" class="btn" color="primary" mat-button type="submit">Save</button>
+    </div>
+  </form>
+</div>

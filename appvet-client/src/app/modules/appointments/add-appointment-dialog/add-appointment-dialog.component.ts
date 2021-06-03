@@ -1,7 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
-import {IMedicalService, MEDICALSERVICE_SERVICE} from "../../medicalServices/medicalService.service";
-import {IServiceModel} from "../../medicalServices/medicalService.model";
 import {IAppointment} from "../appointment.model";
 import {FormGroup} from "@angular/forms";
 import {APPOINTMENT_SERVICE, IAppointmentsService} from "../appointments.service";

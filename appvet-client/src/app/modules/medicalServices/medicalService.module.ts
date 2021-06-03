@@ -6,6 +6,11 @@ import {MatCardModule} from "@angular/material/card";
 import {CommonModule} from "@angular/common";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import { AddMedicalServiceDialogComponent } from './add-medicalService-dialog/add-medicalService-dialog.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   imports: [
@@ -14,9 +19,14 @@ import {MatButtonModule} from "@angular/material/button";
     CommonModule,
     MatIconModule,
     MatButtonModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    MatInputModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     MedicalServiceListComponent,
+    AddMedicalServiceDialogComponent,
   ],
   providers: [MedicalServiceServiceProvider]
 })
