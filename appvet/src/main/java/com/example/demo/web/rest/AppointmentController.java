@@ -33,7 +33,7 @@ public class AppointmentController {
       @RequestParam(defaultValue = "5") Integer pageSize,
       @RequestParam(defaultValue = "dateTime") String sortBy,
       @RequestParam(defaultValue = "DESC") String direction
-      ) {
+  ) {
     return appointmentService.getAppointments(pageNo, pageSize, sortBy, direction);
   }
 
@@ -53,13 +53,13 @@ public class AppointmentController {
   public ResponseEntity<?> addAppointment(@RequestBody AppointmentDto appointmentDto, BindingResult result) throws URISyntaxException {
     appointmentValidator.validate(appointmentDto, result);
 
-    if(result.hasErrors()) {
+    if (result.hasErrors()) {
       return ResponseEntity.badRequest()
           .body(result.getAllErrors());
     }
     Optional<AppointmentDto> newAppointment = appointmentService.add(appointmentDto);
 
-    if(newAppointment.isEmpty())
+    if (newAppointment.isEmpty())
       return new ResponseEntity<>("Error when persisting new appointment.", HttpStatus.INTERNAL_SERVER_ERROR);
 
     return ResponseEntity.created(new URI("/rest/appointments"))
@@ -71,14 +71,14 @@ public class AppointmentController {
   public ResponseEntity<?> modifyAppointment(@RequestBody AppointmentDto appointmentDto, BindingResult result) throws URISyntaxException {
     appointmentValidator.validate(appointmentDto, result);
 
-    if(result.hasErrors()) {
+    if (result.hasErrors()) {
       return ResponseEntity.badRequest()
           .body(result.getAllErrors());
     }
 
     Optional<AppointmentDto> updatedAppointment = appointmentService.modifyAppointment(appointmentDto);
 
-    if(updatedAppointment.isEmpty())
+    if (updatedAppointment.isEmpty())
       return new ResponseEntity<>("Error when persisting modified appointment.", HttpStatus.INTERNAL_SERVER_ERROR);
 
     return ResponseEntity.created(new URI("/rest/appointments"))

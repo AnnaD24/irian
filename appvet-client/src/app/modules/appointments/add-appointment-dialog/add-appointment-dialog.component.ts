@@ -34,8 +34,9 @@ export class AddAppointmentDialogComponent {
       dateTime: formGroup.value.dateTime,
       services: formGroup.value.services
     }
-    this.appointmentService.saveAppointment(newAppointment).subscribe(
-
+    this.appointmentService.saveAppointment(newAppointment).subscribe(appointment => {
+      alert("Appointment for " + appointment.petName + " added.")
+      }
     );
     this.dialogRef.close()
   }

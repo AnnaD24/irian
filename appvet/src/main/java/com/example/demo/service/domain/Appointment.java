@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Appointment extends BaseEntity{
+public class Appointment extends BaseEntity {
 
   @Column(nullable = false)
   private String petName;
@@ -29,7 +29,7 @@ public class Appointment extends BaseEntity{
       joinColumns = @JoinColumn(name = "appointment_id"),
       inverseJoinColumns = @JoinColumn(name = "service_id")
   )
-  private List<ServiceType> services;
+  private List<MedicalService> services;
 
   public Appointment(String petName, String diagnostic, AppointmentStatus status, String doctorName, Date dateTime) {
     this.petName = petName;
@@ -42,7 +42,7 @@ public class Appointment extends BaseEntity{
   public Appointment() {
   }
 
-  public Appointment(String petName, String diagnostic, AppointmentStatus status, String doctorName, Date dateTime, List<ServiceType> services) {
+  public Appointment(String petName, String diagnostic, AppointmentStatus status, String doctorName, Date dateTime, List<MedicalService> services) {
     this.petName = petName;
     this.diagnostic = diagnostic;
     this.status = status;
@@ -91,16 +91,16 @@ public class Appointment extends BaseEntity{
     this.dateTime = dateTime;
   }
 
-  public List<ServiceType> getServices() {
+  public List<MedicalService> getServices() {
     return services;
   }
 
-  public void setServices(List<ServiceType> services) {
+  public void setServices(List<MedicalService> services) {
     this.services = services;
   }
 
-  public void addService(ServiceType service) {
-    if(services == null) {
+  public void addService(MedicalService service) {
+    if (services == null) {
       services = new ArrayList<>();
     }
     services.add(service);

@@ -32,6 +32,7 @@ export class AppointmentListComponent implements OnInit {
       .subscribe(page => {
         this.totalElems = page.totalElements;
         this.appointments = page.content;
+        console.log(this.appointments)
         this.doctors = new Set(this.appointments.map(appointment => appointment.doctorName));
       });
   }
@@ -40,12 +41,16 @@ export class AppointmentListComponent implements OnInit {
     this.appointmentService.modifyAppointment({...appointment, status: Status.COMPLETED})
       .subscribe(data => {
         appointment.status = data.status
+        alert("Appointment for " + data.petName + " set to completed.")
       });
   }
 
   confirmAppointment(appointment: IAppointment) {
     this.appointmentService.modifyAppointment({...appointment, status: Status.CONFIRMED})
-      .subscribe(data => appointment.status = data.status);
+      .subscribe(data =>{
+        appointment.status = data.status
+        alert("Appointment for " + appointment.petName + " set to confirmed.")
+      });
   }
 
   onDoctorChange($event: MatSelectChange) {

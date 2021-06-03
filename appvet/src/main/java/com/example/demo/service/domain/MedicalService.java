@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class ServiceType extends BaseEntity  {
+public class MedicalService extends BaseEntity {
 
   @Column(nullable = false)
   private String name;
@@ -19,25 +19,20 @@ public class ServiceType extends BaseEntity  {
   @JsonBackReference
   private List<Appointment> appointments = new ArrayList<>();
 
-  public ServiceType() {
+  public MedicalService() {
   }
 
-  public ServiceType(String _id, String name, Float price) {
+  public MedicalService(String _id, String name, Float price) {
     this.set_id(_id);
     this.name = name;
     this.price = price;
   }
 
-  public ServiceType(String _id, String name, Float price, List<Appointment> appointments) {
+  public MedicalService(String _id, String name, Float price, List<Appointment> appointments) {
     this.set_id(_id);
     this.name = name;
     this.price = price;
     this.appointments = appointments;
-  }
-
-  public ServiceType(String name, Float price) {
-    this.name = name;
-    this.price = price;
   }
 
   public String getName() {

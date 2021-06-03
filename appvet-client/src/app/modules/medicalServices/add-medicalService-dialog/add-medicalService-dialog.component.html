@@ -20,7 +20,7 @@
     </div>
     <div *ngIf="price.invalid && (price.dirty || price.touched)">
       <div *ngIf="!price.errors?.required" class="error">
-        Minimum price is 50 RON.
+        Minimum price is {{minPrice}} RON.
       </div>
     </div>
     <div>

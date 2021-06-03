@@ -12,10 +12,10 @@ public class AppointmentDto {
   public String diagnostic;
   public Date dateTime;
   public AppointmentStatus status;
-  public List<ServiceTypeDto> services;
+  public List<MedicalServiceDto> services;
   public Float totalCost;
 
-  public AppointmentDto(String id, String doctorName, String petName, String diagnostic, Date dateTime, AppointmentStatus status, List<ServiceTypeDto> services, Float totalCost) {
+  public AppointmentDto(String id, String doctorName, String petName, String diagnostic, Date dateTime, AppointmentStatus status, List<MedicalServiceDto> services, Float totalCost) {
     this.id = id;
     this.doctorName = doctorName;
     this.petName = petName;
@@ -26,59 +26,12 @@ public class AppointmentDto {
     this.totalCost = totalCost;
   }
 
+  //needed for validation
   public String getDoctorName() {
     return doctorName;
   }
 
-  public void setDoctorName(String doctorName) {
-    this.doctorName = doctorName;
-  }
-
   public String getPetName() {
     return petName;
-  }
-
-  public void setPetName(String petName) {
-    this.petName = petName;
-  }
-
-  public String getDiagnostic() {
-    return diagnostic;
-  }
-
-  public void setDiagnostic(String diagnostic) {
-    this.diagnostic = diagnostic;
-  }
-
-  public Date getDateTime() {
-    return dateTime;
-  }
-
-  public void setDateTime(Date dateTime) {
-    this.dateTime = dateTime;
-  }
-
-  public AppointmentStatus getStatus() {
-    return status;
-  }
-
-  public void setStatus(AppointmentStatus status) {
-    this.status = status;
-  }
-
-  public List<ServiceTypeDto> getServices() {
-    return services;
-  }
-
-  public void setServices(List<ServiceTypeDto> services) {
-    this.services = services;
-  }
-
-  public Float getTotalCost() {
-    return totalCost;
-  }
-
-  public void setTotalCost(Float totalCost) {
-    this.totalCost = totalCost;
   }
 }

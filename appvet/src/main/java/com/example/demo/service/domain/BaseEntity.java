@@ -1,6 +1,9 @@
 package com.example.demo.service.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import java.util.UUID;
 
 @MappedSuperclass
@@ -42,11 +45,7 @@ public class BaseEntity {
 
     BaseEntity that = (BaseEntity) o;
 
-    if (!get_id().equals(that.get_id())) {
-      return false;
-    }
-
-    return true;
+    return get_id().equals(that.get_id());
   }
 
   @Override

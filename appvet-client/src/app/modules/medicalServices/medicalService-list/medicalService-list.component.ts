@@ -17,13 +17,13 @@ export class MedicalServiceListComponent implements OnInit {
     @Inject(MEDICALSERVICE_SERVICE) private medicalServiceService: IMedicalService,
     public dialog: MatDialog
   ) {
+  }
+
+  ngOnInit(): void {
     this.medicalServiceService.getServices()
       .subscribe(
         services => this.services = services
       )
-  }
-
-  ngOnInit(): void {
   }
 
   openSurveyDialog() {

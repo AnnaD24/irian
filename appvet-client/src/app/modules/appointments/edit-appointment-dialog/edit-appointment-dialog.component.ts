@@ -44,7 +44,10 @@ export class EditAppointmentDialogComponent {
     }
     this.appointmentService.modifyAppointment(newAppointment)
       .subscribe(
-        data => Object.assign(this.data.appointment, data)
+        data => {
+          alert("Appointment for " + data.petName + " modified.")
+          Object.assign(this.data.appointment, data)
+        }
       );
     this.dialogRef.close()
   }

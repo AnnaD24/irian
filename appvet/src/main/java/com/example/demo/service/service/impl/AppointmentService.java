@@ -2,11 +2,11 @@ package com.example.demo.service.service.impl;
 
 import com.example.demo.service.domain.Appointment;
 import com.example.demo.service.domain.AppointmentStatus;
-import com.example.demo.service.domain.ServiceType;
+import com.example.demo.service.domain.MedicalService;
 import com.example.demo.service.dto.AppointmentDto;
-import com.example.demo.service.dto.ServiceTypeDto;
+import com.example.demo.service.dto.MedicalServiceDto;
 import com.example.demo.service.repository.AppointmentPagedRepository;
-import com.example.demo.service.repository.ServiceTypeRepository;
+import com.example.demo.service.repository.MedicalServiceRepository;
 import com.example.demo.service.service.IAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,21 +22,21 @@ import java.util.stream.Collectors;
 @Service
 public class AppointmentService implements IAppointmentService {
   @Autowired
-  private ServiceTypeService serviceTypeService;
- @Autowired
- private AppointmentPagedRepository appointmentRepository;
+  private MedicalServiceService medicalServiceService;
   @Autowired
-  private ServiceTypeRepository serviceTypeRepository;
+  private AppointmentPagedRepository appointmentRepository;
+  @Autowired
+  private MedicalServiceRepository medicalServiceRepository;
 
   @Override
   public Page<AppointmentDto> getAppointments(Integer pageNo, Integer pageSize, String sortBy, String direction) {
-    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction) ,sortBy));
+    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction), sortBy));
     Page<Appointment> appointmentsPage = appointmentRepository.findAll(pageable);
     return appointmentsPage.map(this::mapToModel);
   }
 
- @Override
- public Optional<AppointmentDto> add(AppointmentDto appointmentDto) {
+  @Override
+  public Optional<AppointmentDto> add(AppointmentDto appointmentDto) {
 
     Appointment appointment = new Appointment(
         appointmentDto.petName,
@@ -47,44 +46,38 @@ public class AppointmentService implements IAppointmentService {
         appointmentDto.dateTime
     );
 
-    for(ServiceTypeDto serviceType: appointmentDto.services) {
-      Optional<ServiceType> foundService = serviceTypeRepository.findById(serviceType.id);
+    for (MedicalServiceDto serviceType : appointmentDto.services) {
+      Optional<MedicalService> foundService = medicalServiceRepository.findById(serviceType.id);
       appointment.addService(foundService.get());
     }
 
     return Optional.of(mapToModel(appointmentRepository.save(appointment)));
- }
-
-  @Override
-  public Page<AppointmentDto> getAppointmentsForDoctor(String doctorName, Integer pageNo, Integer pageSize, String sortBy, String direction) {
-    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction) ,sortBy));
-    Page<Appointment> appointmentsPage = appointmentRepository.findByDoctorName(doctorName, pageable);
-    return appointmentsPage.map(this::mapToModel);
   }
 
   @Override
-  public Optional<Appointment> getAppointment(String id) {
-    return appointmentRepository.findById(id);
+  public Page<AppointmentDto> getAppointmentsForDoctor(String doctorName, Integer pageNo, Integer pageSize, String sortBy, String direction) {
+    Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.fromString(direction), sortBy));
+    Page<Appointment> appointmentsPage = appointmentRepository.findByDoctorName(doctorName, pageable);
+    return appointmentsPage.map(this::mapToModel);
   }
 
   @Override
   public Optional<AppointmentDto> modifyAppointment(AppointmentDto appointmentDto) {
     Optional<Appointment> newAppointment = appointmentRepository.findById(appointmentDto.id);
 
-    if(newAppointment.isEmpty())
+    if (newAppointment.isEmpty())
       return Optional.empty();
 
     Appointment foundAppointment = newAppointment.get();
 
-    List<ServiceType> serviceTypeList = appointmentDto.services.stream()
-        .map(serviceTypeDto -> new ServiceType(serviceTypeDto.id, serviceTypeDto.name, serviceTypeDto.price))
+    List<MedicalService> medicalServiceList = appointmentDto.services.stream()
+        .map(serviceTypeDto -> new MedicalService(serviceTypeDto.id, serviceTypeDto.name, serviceTypeDto.price))
         .collect(Collectors.toList());
 
-    foundAppointment.set_id(appointmentDto.id);
     foundAppointment.setDateTime(appointmentDto.dateTime);
     foundAppointment.setDiagnostic(appointmentDto.diagnostic);
     foundAppointment.setDoctorName(appointmentDto.doctorName);
-    foundAppointment.setServices(serviceTypeList);
+    foundAppointment.setServices(medicalServiceList);
     foundAppointment.setStatus(appointmentDto.status);
     foundAppointment.setPetName(appointmentDto.petName);
 
@@ -92,8 +85,8 @@ public class AppointmentService implements IAppointmentService {
   }
 
   public AppointmentDto mapToModel(Appointment appointment) {
-    List<ServiceTypeDto> serviceDtos = appointment.getServices().stream()
-        .map(serviceType -> serviceTypeService.mapToModel(serviceType))
+    List<MedicalServiceDto> serviceDtos = appointment.getServices().stream()
+        .map(serviceType -> medicalServiceService.mapToModel(serviceType))
         .collect(Collectors.toList());
 
     return new AppointmentDto(appointment.get_id(),
@@ -107,7 +100,7 @@ public class AppointmentService implements IAppointmentService {
   }
 
 
-  private Float computeServicesTotalCost(List<ServiceTypeDto> services) {
+  private Float computeServicesTotalCost(List<MedicalServiceDto> services) {
     return services.stream()
         .map(serviceTypeDto -> serviceTypeDto.price)
         .reduce((float) 0, Float::sum);

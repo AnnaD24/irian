@@ -49,6 +49,7 @@ export class AddMedicalServiceDialogComponent implements OnInit {
   onSubmit() {
     this.dialogRef.close()
     this.medicalServiceService.saveService(this.serviceForm.value).subscribe(service => {
+      alert("Service " + service.name + " added!")
     });
   }
 }
