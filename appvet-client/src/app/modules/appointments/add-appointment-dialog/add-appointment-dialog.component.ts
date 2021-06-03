@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {IAppointment} from "../appointment.model";
 import {FormGroup} from "@angular/forms";
@@ -24,7 +24,8 @@ export class AddAppointmentDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<AddAppointmentDialogComponent>,
     @Inject(APPOINTMENT_SERVICE) private appointmentService: IAppointmentsService
-  ) {}
+  ) {
+  }
 
   onSubmit(formGroup: FormGroup) {
     let newAppointment: IAppointment = {

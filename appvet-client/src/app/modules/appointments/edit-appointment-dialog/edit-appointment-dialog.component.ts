@@ -13,7 +13,7 @@ export interface DialogData {
   templateUrl: './edit-appointment-dialog.component.html',
   styleUrls: ['./edit-appointment-dialog.component.css']
 })
-export class EditAppointmentDialogComponent{
+export class EditAppointmentDialogComponent {
   public test: string = "control"
 
   initialValues: IAppointment;
@@ -44,7 +44,7 @@ export class EditAppointmentDialogComponent{
     }
     this.appointmentService.modifyAppointment(newAppointment)
       .subscribe(
-        data => Object.assign(this.data.appointment,data)
+        data => Object.assign(this.data.appointment, data)
       );
     this.dialogRef.close()
   }

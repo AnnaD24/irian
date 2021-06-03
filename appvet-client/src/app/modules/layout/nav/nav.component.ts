@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {INavigationService, NAVIGATION_SERVICE} from "../../../commons/navigation.service";
 
 @Component({
@@ -6,7 +6,7 @@ import {INavigationService, NAVIGATION_SERVICE} from "../../../commons/navigatio
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent{
+export class NavComponent {
 
   constructor(@Inject(NAVIGATION_SERVICE) private navigationService: INavigationService) {
   }

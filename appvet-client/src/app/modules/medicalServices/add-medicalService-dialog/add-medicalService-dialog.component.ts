@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {MatDialogRef} from "@angular/material/dialog";
 import {IMedicalService, MEDICALSERVICE_SERVICE} from "../medicalService.service";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 
@@ -17,24 +17,32 @@ export class AddMedicalServiceDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<AddMedicalServiceDialogComponent>,
     @Inject(MEDICALSERVICE_SERVICE) private medicalServiceService: IMedicalService
-  ) {}
+  ) {
+  }
+
+  get price() {
+    return this.serviceForm.get('price')
+  }
+
+  get name() {
+    return this.serviceForm.get('name')
+  }
 
   priceValidation() {
     return (control: AbstractControl): ValidationErrors | any => {
-        if (control.value < this.minPrice) {
-          return {
-            'price-validator': true
-          };
-        }
+      if (control.value < this.minPrice) {
+        return {
+          'price-validator': true
+        };
+      }
       return undefined;
     };
   }
 
-
   ngOnInit(): void {
     this.serviceForm = this.formBuilder.group({
-      name: new FormControl('',[Validators.required]),
-      price: new FormControl('',[Validators.required, this.priceValidation()])
+      name: new FormControl('', [Validators.required]),
+      price: new FormControl('', [Validators.required, this.priceValidation()])
     })
   }
 
@@ -43,8 +51,4 @@ export class AddMedicalServiceDialogComponent implements OnInit {
     this.medicalServiceService.saveService(this.serviceForm.value).subscribe(service => {
     });
   }
-
-  get price() {return this.serviceForm.get('price')}
-
-  get name() {return this.serviceForm.get('name')}
 }

@@ -1,15 +1,13 @@
-
-
 <div class='actions'>
-  <button mat-fab color="primary" (click)="openSurveyDialog()">
+  <button (click)="openSurveyDialog()" color="primary" mat-fab>
     <mat-icon>add</mat-icon>
   </button>
 </div>
 
 <div *ngFor='let service of services' class='list'>
   <mat-card>
-    <mat-card-title>	{{service.name}} </mat-card-title>
+    <mat-card-title>  {{service.name}} </mat-card-title>
     <mat-card-content> Price: {{service.price}}</mat-card-content>
-    <mat-card-actions> </mat-card-actions>
+    <mat-card-actions></mat-card-actions>
   </mat-card>
 </div>

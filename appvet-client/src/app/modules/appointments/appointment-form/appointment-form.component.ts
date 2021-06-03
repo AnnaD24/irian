@@ -1,8 +1,7 @@
-import {Component, Inject, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {IServiceModel} from "../../medicalServices/medicalService.model";
 import {IAppointment} from "../appointment.model";
-import {EventEmitter} from '@angular/core';
 import {IMedicalService, MEDICALSERVICE_SERVICE} from "../../medicalServices/medicalService.service";
 
 @Component({
@@ -54,7 +53,7 @@ export class AppointmentFormComponent implements OnInit {
 
   diagnosticValidation() {
     return (control: AbstractControl): ValidationErrors | any => {
-      if(control.value) {
+      if (control.value) {
         if (control.value.trim().length < 4) {
           return {
             'price-validator': true

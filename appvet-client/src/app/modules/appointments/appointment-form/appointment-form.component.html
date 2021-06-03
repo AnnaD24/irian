@@ -30,9 +30,9 @@
         <mat-label>Diagnostic</mat-label>
         <input class="form-control"
                formControlName="diagnostic" matInput
+               matTooltip="Appointment can be completed only if a diagnostic is set."
                name="diagnostic"
-               type="text"
-               matTooltip="Appointment can be completed only if a diagnostic is set.">
+               type="text">
       </mat-form-field>
       <mat-form-field appearance="fill">
         <input [ngxMatDatetimePicker]="picker" formControlName="dateTime" matInput name="dateTime"

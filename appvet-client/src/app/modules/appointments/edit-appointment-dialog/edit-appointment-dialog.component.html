@@ -1,5 +1,5 @@
 <div class="container">
   <h3>Edit appointment</h3>
-  <appointment-form [initialValues]="initialValues" (saveAppointment)="onSubmit($event)">
+  <appointment-form (saveAppointment)="onSubmit($event)" [initialValues]="initialValues">
   </appointment-form>
 </div>

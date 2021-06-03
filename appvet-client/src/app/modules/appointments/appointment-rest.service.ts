@@ -12,7 +12,7 @@ export class AppointmentRestService implements IAppointmentsService {
   constructor(private http: HttpClient) {
   }
 
-  getPagedAppointments(pageIndex:number): Observable<IPage> {
+  getPagedAppointments(pageIndex: number): Observable<IPage> {
     return this.http.get<IPage>(this.url + '?pageSize=5&pageNo=' + pageIndex + '&sortBy=dateTime');
   }
 

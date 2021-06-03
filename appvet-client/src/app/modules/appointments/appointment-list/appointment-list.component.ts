@@ -13,7 +13,7 @@ import {PageEvent} from "@angular/material/paginator";
   templateUrl: './appointment-list.component.html',
   styleUrls: ['./appointment-list.component.css']
 })
-export class AppointmentListComponent implements OnInit{
+export class AppointmentListComponent implements OnInit {
 
   appointments: Array<IAppointment>;
   doctors: Set<string>;
@@ -24,7 +24,8 @@ export class AppointmentListComponent implements OnInit{
   totalElems: number;
 
   constructor(@Inject(APPOINTMENT_SERVICE) private appointmentService: IAppointmentsService,
-              public dialog: MatDialog) {}
+              public dialog: MatDialog) {
+  }
 
   getAllAppointments() {
     this.appointmentService.getPagedAppointments(this.pageIndex)
@@ -37,16 +38,18 @@ export class AppointmentListComponent implements OnInit{
 
   completeAppointment(appointment: IAppointment) {
     this.appointmentService.modifyAppointment({...appointment, status: Status.COMPLETED})
-      .subscribe(data => {appointment.status=data.status});
+      .subscribe(data => {
+        appointment.status = data.status
+      });
   }
 
   confirmAppointment(appointment: IAppointment) {
     this.appointmentService.modifyAppointment({...appointment, status: Status.CONFIRMED})
-      .subscribe(data => appointment.status=data.status);
+      .subscribe(data => appointment.status = data.status);
   }
 
   onDoctorChange($event: MatSelectChange) {
-    if($event.value === 'all')
+    if ($event.value === 'all')
       this.getAllAppointments();
 
     this.appointmentService.getPagedAppointmentsByDoctorName($event.value)

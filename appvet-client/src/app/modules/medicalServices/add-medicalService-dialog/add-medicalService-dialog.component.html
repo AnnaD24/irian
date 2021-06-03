@@ -1,7 +1,6 @@
-
 <div class="container">
   <h3>Add service</h3>
-  <form (ngSubmit)="onSubmit()" [formGroup]="serviceForm" >
+  <form (ngSubmit)="onSubmit()" [formGroup]="serviceForm">
     <div style="display: flex; flex-direction: column;">
       <mat-form-field appearance="fill">
         <mat-label>Service name</mat-label>
@@ -12,10 +11,10 @@
       <mat-form-field appearance="fill">
         <mat-label>Price</mat-label>
         <input class="form-control" formControlName="price" matInput
-               name="price"
-               type="number"
                min="1"
+               name="price"
                required
+               type="number"
         >
       </mat-form-field>
     </div>
