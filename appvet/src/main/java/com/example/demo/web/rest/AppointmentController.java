@@ -13,6 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Optional;
 
 
 @EnableSwagger2
@@ -56,15 +57,18 @@ public class AppointmentController {
       return ResponseEntity.badRequest()
           .body(result.getAllErrors());
     }
-    appointmentService.add(appointmentDto);
+    Optional<AppointmentDto> newAppointment = appointmentService.add(appointmentDto);
+
+    if(newAppointment.isEmpty())
+      return new ResponseEntity<>("Error when persisting new appointment.", HttpStatus.INTERNAL_SERVER_ERROR);
 
     return ResponseEntity.created(new URI("/rest/appointments"))
-        .build();
+        .body(newAppointment);
   }
 
   @PutMapping
   @ResponseBody
-  public ResponseEntity<?> modifyAppointment(@RequestBody AppointmentDto appointmentDto, BindingResult result) {
+  public ResponseEntity<?> modifyAppointment(@RequestBody AppointmentDto appointmentDto, BindingResult result) throws URISyntaxException {
     appointmentValidator.validate(appointmentDto, result);
 
     if(result.hasErrors()) {
@@ -72,8 +76,12 @@ public class AppointmentController {
           .body(result.getAllErrors());
     }
 
-    return appointmentService.modifyAppointment(appointmentDto)
-        .map(value -> new ResponseEntity<>(value + " modified.", HttpStatus.CREATED))
-        .orElseGet(() -> new ResponseEntity<>("Error when modifying appointment", HttpStatus.BAD_REQUEST));
+    Optional<AppointmentDto> updatedAppointment = appointmentService.modifyAppointment(appointmentDto);
+
+    if(updatedAppointment.isEmpty())
+      return new ResponseEntity<>("Error when persisting modified appointment.", HttpStatus.INTERNAL_SERVER_ERROR);
+
+    return ResponseEntity.created(new URI("/rest/appointments"))
+        .body(updatedAppointment);
   }
 }

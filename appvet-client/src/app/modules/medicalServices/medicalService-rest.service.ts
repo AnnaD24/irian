@@ -14,6 +14,10 @@ export class MedicalServiceRestService implements IMedicalService {
   getServices(): Observable<Array<IServiceModel>> {
     return this.http.get<Array<IServiceModel>>(this.url);
   }
+
+  saveService(service: IServiceModel): Observable<any> {
+    return this.http.post(this.url, service);
+  }
 }
 
 export const MedicalServiceServiceProvider: Provider = {

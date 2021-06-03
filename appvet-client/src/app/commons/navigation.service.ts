@@ -18,7 +18,7 @@ export class NavigationService implements INavigationService {
   }
 
   openAppointments(): Promise<boolean> {
-    return this.router.navigate(['appointments']);
+    return this.router.navigate(['']);
   }
 
   openServices(): Promise<boolean> {

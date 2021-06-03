@@ -27,19 +27,25 @@ export class EditAppointmentDialogComponent{
       petName: data.appointment.petName,
       doctorName: data.appointment.doctorName,
       dateTime: data.appointment.dateTime,
+      diagnostic: data.appointment.diagnostic,
       services: data.appointment.services
     }
   }
 
   onSubmit(formGroup: FormGroup) {
     let newAppointment: IAppointment = {
-      petName: formGroup.value.petName,
+      id: this.data.appointment.id,
       doctorName: formGroup.value.doctorName,
-      dateTime: formGroup.value.datetime,
+      diagnostic: formGroup.value.diagnostic,
+      status: this.data.appointment.status,
+      petName: formGroup.value.petName,
+      dateTime: formGroup.value.dateTime,
       services: formGroup.value.services
     }
-    console.log(newAppointment)
-    this.appointmentService.modifyAppointment(newAppointment).subscribe(data => console.log(data));
+    this.appointmentService.modifyAppointment(newAppointment)
+      .subscribe(
+        data => Object.assign(this.data.appointment,data)
+      );
     this.dialogRef.close()
   }
 }

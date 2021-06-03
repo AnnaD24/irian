@@ -12,8 +12,8 @@ export class AppointmentRestService implements IAppointmentsService {
   constructor(private http: HttpClient) {
   }
 
-  getPagedAppointments(): Observable<IPage> {
-    return this.http.get<IPage>(this.url + '?pageSize=5&pageNo=0&sortBy=dateTime');
+  getPagedAppointments(pageIndex:number): Observable<IPage> {
+    return this.http.get<IPage>(this.url + '?pageSize=5&pageNo=' + pageIndex + '&sortBy=dateTime');
   }
 
   getPagedAppointmentsByDoctorName(name: string): Observable<IPage> {

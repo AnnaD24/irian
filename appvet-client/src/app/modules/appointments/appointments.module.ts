@@ -18,6 +18,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EditAppointmentDialogComponent } from './edit-appointment-dialog/edit-appointment-dialog.component';
 import { AppointmentFormComponent } from './appointment-form/appointment-form.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { AppointmentFormComponent } from './appointment-form/appointment-form.co
     NgxMatNativeDateModule,
     NgxMatDatetimePickerModule,
     MatDatepickerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTooltipModule
   ],
   declarations: [
     AppointmentListComponent,

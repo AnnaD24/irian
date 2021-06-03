@@ -1,5 +1,5 @@
 import {Component, Inject, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {IServiceModel} from "../../medicalServices/medicalService.model";
 import {IAppointment} from "../appointment.model";
 import {EventEmitter} from '@angular/core';
@@ -37,7 +37,8 @@ export class AppointmentFormComponent implements OnInit {
     this.appointmentForm = this.formBuilder.group({
       petName: [this.initialValues.petName, Validators.required],
       doctorName: [this.initialValues.doctorName, Validators.required],
-      datetime: [this.initialValues.dateTime, Validators.required],
+      dateTime: [this.initialValues.dateTime, Validators.required],
+      diagnostic: [this.initialValues.diagnostic, this.diagnosticValidation()],
       services: [[], Validators.required]
     })
     this.medicalServiceService.getServices()
@@ -51,4 +52,16 @@ export class AppointmentFormComponent implements OnInit {
       })
   }
 
+  diagnosticValidation() {
+    return (control: AbstractControl): ValidationErrors | any => {
+      if(control.value) {
+        if (control.value.trim().length < 4) {
+          return {
+            'price-validator': true
+          };
+        }
+      }
+      return undefined;
+    };
+  }
 }

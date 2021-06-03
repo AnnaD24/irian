@@ -11,7 +11,7 @@ const routes: Routes = [
         path: 'services', loadChildren: () => import('../medicalServices/medicalService.module').then(m => m.MedicalServiceModule)
       },
       {
-        path: 'appointments', loadChildren: () => import('../appointments/appointments.module').then(m => m.AppointmentsModule)
+        path: '', loadChildren: () => import('../appointments/appointments.module').then(m => m.AppointmentsModule)
       },
     ]
   },

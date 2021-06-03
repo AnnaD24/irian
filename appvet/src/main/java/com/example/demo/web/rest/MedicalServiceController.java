@@ -10,6 +10,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collection;
 
 @EnableSwagger2
@@ -30,7 +32,7 @@ public class MedicalServiceController {
 
   @PostMapping
   @ResponseBody
-  public ResponseEntity<?> addService(@RequestBody ServiceTypeDto serviceTypeDto, BindingResult result) {
+  public ResponseEntity<?> addService(@RequestBody ServiceTypeDto serviceTypeDto, BindingResult result) throws URISyntaxException {
     medicalServiceValidator.validate(serviceTypeDto, result);
 
     if(result.hasErrors()) {
@@ -38,8 +40,9 @@ public class MedicalServiceController {
           .body(result.getAllErrors());
     }
 
-    return serviceTypeService.add(serviceTypeDto)
-        .map(value -> new ResponseEntity<>(value + " added", HttpStatus.CREATED))
-        .orElseGet(() -> new ResponseEntity<>("Error when adding new service", HttpStatus.INTERNAL_SERVER_ERROR));
+    serviceTypeService.add(serviceTypeDto);
+
+    return ResponseEntity.created(new URI("/rest/services"))
+        .build();
   }
 }

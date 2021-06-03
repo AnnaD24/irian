@@ -17,6 +17,7 @@ export class AddAppointmentDialogComponent {
     petName: '',
     doctorName: '',
     dateTime: null,
+    diagnostic: '',
     services: []
   }
 
@@ -29,11 +30,12 @@ export class AddAppointmentDialogComponent {
     let newAppointment: IAppointment = {
       petName: formGroup.value.petName,
       doctorName: formGroup.value.doctorName,
-      dateTime: formGroup.value.datetime,
+      dateTime: formGroup.value.dateTime,
       services: formGroup.value.services
     }
-    console.log(newAppointment)
-    this.appointmentService.saveAppointment(newAppointment).subscribe();
+    this.appointmentService.saveAppointment(newAppointment).subscribe(
+
+    );
     this.dialogRef.close()
   }
 }

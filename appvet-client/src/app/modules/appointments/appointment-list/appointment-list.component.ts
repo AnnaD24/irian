@@ -5,29 +5,44 @@ import {MatSelectChange} from "@angular/material/select";
 import {MatDialog} from "@angular/material/dialog";
 import {AddAppointmentDialogComponent} from "../add-appointment-dialog/add-appointment-dialog.component";
 import {EditAppointmentDialogComponent} from "../edit-appointment-dialog/edit-appointment-dialog.component";
+import {Status} from "../appointment-status.model";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointment-list.component.html',
   styleUrls: ['./appointment-list.component.css']
 })
-export class AppointmentListComponent {
+export class AppointmentListComponent implements OnInit{
 
-  public appointments: Array<IAppointment>;
-  public doctors: Set<string>;
+  appointments: Array<IAppointment>;
+  doctors: Set<string>;
+
   selected: string = 'all';
 
+  pageIndex: number = 0;
+  totalElems: number;
+
   constructor(@Inject(APPOINTMENT_SERVICE) private appointmentService: IAppointmentsService,
-              public dialog: MatDialog) {
-    this.getAllAppointments();
-  }
+              public dialog: MatDialog) {}
 
   getAllAppointments() {
-    this.appointmentService.getPagedAppointments()
+    this.appointmentService.getPagedAppointments(this.pageIndex)
       .subscribe(page => {
+        this.totalElems = page.totalElements;
         this.appointments = page.content;
         this.doctors = new Set(this.appointments.map(appointment => appointment.doctorName));
       });
+  }
+
+  completeAppointment(appointment: IAppointment) {
+    this.appointmentService.modifyAppointment({...appointment, status: Status.COMPLETED})
+      .subscribe(data => {appointment.status=data.status});
+  }
+
+  confirmAppointment(appointment: IAppointment) {
+    this.appointmentService.modifyAppointment({...appointment, status: Status.CONFIRMED})
+      .subscribe(data => appointment.status=data.status);
   }
 
   onDoctorChange($event: MatSelectChange) {
@@ -51,5 +66,14 @@ export class AppointmentListComponent {
     this.dialog.open(AddAppointmentDialogComponent, {
       width: '500px',
     });
+  }
+
+  ngOnInit(): void {
+    this.getAllAppointments();
+  }
+
+  onPageChanged($event: PageEvent) {
+    this.pageIndex = $event.pageIndex;
+    this.getAllAppointments();
   }
 }

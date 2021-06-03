@@ -41,12 +41,12 @@ public class AppointmentService implements IAppointmentService {
 
     Appointment appointment = new Appointment(
         appointmentDto.petName,
-        appointmentDto.diagnostic,
+        "",
         AppointmentStatus.CREATED,
         appointmentDto.doctorName,
         appointmentDto.dateTime
     );
-    //TODO: check service exists
+
     for(ServiceTypeDto serviceType: appointmentDto.services) {
       Optional<ServiceType> foundService = serviceTypeRepository.findById(serviceType.id);
       appointment.addService(foundService.get());
@@ -80,6 +80,7 @@ public class AppointmentService implements IAppointmentService {
         .map(serviceTypeDto -> new ServiceType(serviceTypeDto.id, serviceTypeDto.name, serviceTypeDto.price))
         .collect(Collectors.toList());
 
+    foundAppointment.set_id(appointmentDto.id);
     foundAppointment.setDateTime(appointmentDto.dateTime);
     foundAppointment.setDiagnostic(appointmentDto.diagnostic);
     foundAppointment.setDoctorName(appointmentDto.doctorName);
@@ -90,12 +91,6 @@ public class AppointmentService implements IAppointmentService {
     return Optional.of(mapToModel(appointmentRepository.save(foundAppointment)));
   }
 
-  @Override
-  public boolean existsAppointmentByPetNameAndDate(String petName, Date dateTime) {
-    return appointmentRepository.existsAppointmentByPetNameAndDateTime(petName, dateTime);
-  }
-
-  //TODO: change to MappingService
   public AppointmentDto mapToModel(Appointment appointment) {
     List<ServiceTypeDto> serviceDtos = appointment.getServices().stream()
         .map(serviceType -> serviceTypeService.mapToModel(serviceType))

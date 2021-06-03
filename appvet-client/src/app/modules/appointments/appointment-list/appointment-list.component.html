@@ -1,15 +1,17 @@
 
-<button mat-fab color="primary" (click)="openAddDialog()">
-  <mat-icon>add</mat-icon>
-</button>
+<div class='actions'>
+  <mat-form-field appearance="fill" style="margin: 5px">
+    <mat-label>Filter By Doctor</mat-label>
+    <mat-select (selectionChange)="onDoctorChange($event)"  [(value)]="selected">
+      <mat-option value="all">ALL</mat-option>
+      <mat-option *ngFor="let doctor of doctors" value={{doctor}}>{{doctor}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-fab color="primary" (click)="openAddDialog()" style="margin: 5px">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
 
-<mat-form-field appearance="fill">
-  <mat-label>Filter By Doctor</mat-label>
-  <mat-select (selectionChange)="onDoctorChange($event)"  [(value)]="selected">
-    <mat-option value="all">ALL</mat-option>
-    <mat-option *ngFor="let doctor of doctors" value={{doctor}}>{{doctor}}</mat-option>
-  </mat-select>
-</mat-form-field>
 
 <div *ngFor='let appointment of appointments' class='list'>
   <mat-card>
@@ -17,18 +19,26 @@
     <mat-card-subtitle>	{{appointment.status}} </mat-card-subtitle>
     <mat-card-content> Diagnostic: {{appointment.diagnostic}}</mat-card-content>
     <mat-card-content> Doctor: {{appointment.doctorName}}</mat-card-content>
-    <mat-card-content> Date: {{appointment.dateTime}}</mat-card-content>
-    <mat-card-content> Cost: {{appointment.totalCost}}</mat-card-content>
+    <mat-card-content> Date: {{appointment.dateTime | date: 'EEEE, MMMM d, y, h:mm a'}}</mat-card-content>
+    <mat-card-content> Cost: {{appointment.totalCost | currency}}</mat-card-content>
     <mat-card-actions>
-      <button mat-mini-fab (click)="openEditDialog(appointment)">
+      <button mat-mini-fab *ngIf="appointment.status.toString()!='COMPLETED'" (click)="openEditDialog(appointment)">
         <mat-icon>edit</mat-icon>
+      </button>
+      <button *ngIf="appointment.status.toString()==='CREATED'" (click)="confirmAppointment(appointment)" mat-stroked-button color="primary">
+        Confirm
+      </button>
+      <button *ngIf="appointment.diagnostic!='' && appointment.status.toString()!='COMPLETED'" (click)="completeAppointment(appointment)" mat-stroked-button>
+        Complete
       </button>
     </mat-card-actions>
   </mat-card>
 </div>
 
-<!--//TODO-->
-<mat-paginator [length]="100"
+<mat-paginator [length]="totalElems"
                [pageSize]="5"
-               [pageSizeOptions]="[5]">
+               [pageSizeOptions]="[5]"
+               (page)="onPageChanged($event)"
+>
 </mat-paginator>
+matTooltip="Info about the action"matTooltip="Info about the action"

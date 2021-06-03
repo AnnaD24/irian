@@ -27,7 +27,15 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="fill">
-        <input [ngxMatDatetimePicker]="picker" formControlName="datetime" matInput name="datetime"
+        <mat-label>Diagnostic</mat-label>
+        <input class="form-control"
+               formControlName="diagnostic" matInput
+               name="diagnostic"
+               type="text"
+               matTooltip="Appointment can be completed only if a diagnostic is set.">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <input [ngxMatDatetimePicker]="picker" formControlName="dateTime" matInput name="dateTime"
                placeholder="Choose a date">
         <mat-datepicker-toggle [for]="picker" matSuffix></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker>

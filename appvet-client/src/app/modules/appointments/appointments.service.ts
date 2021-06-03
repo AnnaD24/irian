@@ -5,7 +5,7 @@ import {IAppointment} from "./appointment.model";
 
 
 export interface IAppointmentsService {
-  getPagedAppointments(): Observable<IPage>;
+  getPagedAppointments(pageIndex: number): Observable<IPage>;
 
   getPagedAppointmentsByDoctorName(name: string): Observable<IPage>;
 

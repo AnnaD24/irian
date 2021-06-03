@@ -30,6 +30,7 @@ export class AddMedicalServiceDialogComponent implements OnInit {
     };
   }
 
+
   ngOnInit(): void {
     this.serviceForm = this.formBuilder.group({
       name: new FormControl('',[Validators.required]),
@@ -39,8 +40,11 @@ export class AddMedicalServiceDialogComponent implements OnInit {
 
   onSubmit() {
     this.dialogRef.close()
+    this.medicalServiceService.saveService(this.serviceForm.value).subscribe(service => {
+    });
   }
 
   get price() {return this.serviceForm.get('price')}
 
+  get name() {return this.serviceForm.get('name')}
 }

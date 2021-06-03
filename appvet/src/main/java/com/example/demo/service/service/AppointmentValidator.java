@@ -22,11 +22,5 @@ public class AppointmentValidator implements Validator {
   public void validate(Object target, Errors errors) {
     ValidationUtils.rejectIfEmpty(errors, "petName", "petName.empty");
     ValidationUtils.rejectIfEmpty(errors, "doctorName", "doctorName.empty");
-
-    AppointmentDto appointment = (AppointmentDto) target;
-
-    if (appointmentService.existsAppointmentByPetNameAndDate(appointment.petName, appointment.dateTime)) {
-      errors.rejectValue("petName", "notUnique");
-    }
   }
 }

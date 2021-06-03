@@ -18,10 +18,9 @@ export class MedicalServiceListComponent implements OnInit {
     public dialog: MatDialog
   ) {
     this.medicalServiceService.getServices()
-      .subscribe(services => {
-        console.log(services);
-        this.services = services;
-      })
+      .subscribe(
+        services => this.services = services
+      )
   }
 
   ngOnInit(): void {
