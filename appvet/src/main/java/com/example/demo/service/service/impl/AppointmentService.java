@@ -15,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -82,6 +84,14 @@ public class AppointmentService implements IAppointmentService {
     foundAppointment.setPetName(appointmentDto.petName);
 
     return Optional.of(mapToModel(appointmentRepository.save(foundAppointment)));
+  }
+
+  @Override
+  public Collection<String> getDoctors() {
+    Collection<String> doctors = new ArrayList<>();
+    Iterable<Appointment> appointments = this.appointmentRepository.findAll();
+    appointments.forEach(a -> doctors.add(a.getDoctorName()));
+    return doctors.stream().distinct().collect(Collectors.toList());
   }
 
   public AppointmentDto mapToModel(Appointment appointment) {

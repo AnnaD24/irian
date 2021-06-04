@@ -33,6 +33,10 @@ export class AppointmentRestService implements IAppointmentsService {
       newAppointment
     );
   }
+
+  getAllDoctors(): Observable<any> {
+    return this.http.get(this.url + "/doctors");
+  }
 }
 
 export const AppointmentServiceProvider: Provider = {

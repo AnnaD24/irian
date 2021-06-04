@@ -33,8 +33,14 @@ export class AppointmentListComponent implements OnInit {
         this.totalElems = page.totalElements;
         this.appointments = page.content;
         console.log(this.appointments)
-        this.doctors = new Set(this.appointments.map(appointment => appointment.doctorName));
+        this.getAllDoctors();
+        this.doctors = new Set(this.appointments.map(appointment => appointment.doctorName));//TODO
       });
+  }
+
+  getAllDoctors() {
+    this.appointmentService.getAllDoctors()
+      .subscribe(doctors => this.doctors = doctors)
   }
 
   completeAppointment(appointment: IAppointment) {
@@ -54,12 +60,15 @@ export class AppointmentListComponent implements OnInit {
   }
 
   onDoctorChange($event: MatSelectChange) {
-    if ($event.value === 'all')
+    if ($event.value === 'all') {
       this.getAllAppointments();
+      return;
+    }
 
     this.appointmentService.getPagedAppointmentsByDoctorName($event.value)
       .subscribe(page => {
         this.appointments = page.content;
+        this.totalElems = page.totalElements;
       })
   }
 
@@ -76,12 +85,13 @@ export class AppointmentListComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.getAllAppointments();
-  }
 
   onPageChanged($event: PageEvent) {
     this.pageIndex = $event.pageIndex;
+    this.getAllAppointments();
+  }
+
+  ngOnInit(): void {
     this.getAllAppointments();
   }
 }

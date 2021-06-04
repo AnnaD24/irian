@@ -12,6 +12,8 @@ export interface IAppointmentsService {
   saveAppointment(newAppointment: IAppointment): Observable<any>;
 
   modifyAppointment(newAppointment: IAppointment): Observable<any>;
+
+  getAllDoctors(): Observable<any>;
 }
 
 export const APPOINTMENT_SERVICE = new InjectionToken<IAppointmentsService>('APPOINTMENT_SERVICE');

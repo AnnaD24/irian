@@ -13,6 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.Optional;
 
 
@@ -36,6 +37,12 @@ public class AppointmentController {
   ) {
     return appointmentService.getAppointments(pageNo, pageSize, sortBy, direction);
   }
+
+  @GetMapping("/doctors")
+  public Collection<String> getDoctors() {
+    return this.appointmentService.getDoctors();
+  }
+
 
   @GetMapping("/{doctorName}")
   public Page<AppointmentDto> getAppointmentsForDoctor(

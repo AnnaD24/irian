@@ -5,10 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.Date;
-import java.util.Optional;
-
 public interface AppointmentPagedRepository extends PagingAndSortingRepository<Appointment, String> {
   Page<Appointment> findByDoctorName(String doctorName, Pageable pageable);
-  boolean existsAppointmentByPetNameAndDateTime(String petName, Date dateTime);
 }
